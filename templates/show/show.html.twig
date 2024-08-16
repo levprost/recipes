@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Show {% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12 my-3">
+                            {{post.createdAt|date('D d M Y')}}    
+                        </div>
+                        <div class="col-md-12 my-3">
+                            <h2>{{post.title}}
+                            </h2>
+                        </div>
+                        <div class="col-md-12 my-3">
+                            {% if (post.image is empty) %}
+                            
+                            
+                            {% else %}
+
+                               <img class="my-3  d-flex" src="{{asset('divers/images/' ~ post.image)}}" alt="Mon image"/>
+                            
+                            {% endif %}
+
+                            <div class="card mb-4">
+                        </div>
+                            <div class="card-body">
+                        <div class="col-md-12 my-3">
+                            <h2>{{post.abstract|raw}}
+                            </h2>
+                        </div>
+
+                            
+                            {{posts.step.stepContent}}
+                            
+
+                    </div>
+                    
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
