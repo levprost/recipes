@@ -30,4 +30,17 @@
                     </a>
                     {% endfor %}
                 </div>
+
+                {% for posts2 in posts2 %}
+                <div class="card " style="width: 18rem;">
+                    <a class="col-md-5 my-3" href="{{path('show', {id: posts2.id})}}">
+                        <img src="d-flex imgPost2" src="{{asset('divers/images/' ~ posts2.image)}}" alt="Mon image"/>
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{posts2.title}}</h5>
+                        <p class="card-text">{{posts2.abstract}}</p>
+                        <a href="{{path('show', {id: posts2.id})}}" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                {% endfor %}
 {% endblock %}
