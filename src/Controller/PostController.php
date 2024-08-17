@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostController extends AbstractController
 {
@@ -43,4 +44,30 @@ class PostController extends AbstractController
             'post' => $post
         ]);
     }
+    #[Route('/favoris/ajout/{id}', name: 'ajout_favoris')]
+    public function ajoutFavoris(Post $post, EntityManagerInterface $emi): Response
+    {
+        if(!$post){
+            throw new NotFoundHttpException('Pas d\'annonce trouvée');
+        }
+        $post->addFavori($this->getUser());
+
+        $emi->persist($post);
+        $emi->flush();
+        return $this->redirectToRoute('app_post');
+    }
+    #[Route('/favoris/retrait/{id}', name: 'retrait_favoris')]
+    public function retraitFavoris(Post $post, EntityManagerInterface $emi)
+    {
+        if(!$post){
+            throw new NotFoundHttpException('Pas d\'annonce trouvée');
+        }
+        $post->removeFavori($this->getUser());
+
+
+        $emi->persist($post);
+        $emi->flush();
+        return $this->redirectToRoute('app_post');
+    }
+ 
 }

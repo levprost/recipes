@@ -49,9 +49,16 @@ class Post
     #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'post')]
     private Collection $step;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoris')]
+    private Collection $favoris;
+
     public function __construct()
     {
         $this->step = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,6 +200,30 @@ class Post
                 $step->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(User $favori): static
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(User $favori): static
+    {
+        $this->favoris->removeElement($favori);
 
         return $this;
     }
